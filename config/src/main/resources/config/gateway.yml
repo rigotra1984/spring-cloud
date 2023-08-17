@@ -1,0 +1,39 @@
+server:
+  port: 8060
+
+eureka:
+  client:
+    serviceUrl:
+      defaultZone: http://localhost:8061/eureka/
+
+logging:
+  pattern: 
+    console: "%d{yyyy-MM-dd HH:mm:ss} [%X{traceId:-},%X{spanId:-}] ${LOG_LEVEL_PATTERN:-%5p} %m%n"
+              
+spring:
+  output:
+    ansi:
+      enabled: always
+  cloud:
+    gateway:
+      discovery:
+        locator:
+          enabled: true
+      routes:
+      - id: transport-service
+        uri: lb://transport-service
+        predicates:
+          - Path=/transport/**
+        filters:
+          - RewritePath=/transport/(?<path>.*), /$\{path}
+      - id: passenger-service
+        uri: lb://passenger-service
+        predicates:
+          - Path=/passenger/**
+        filters:
+          - RewritePath=/passenger/(?<path>.*), /$\{path}
+
+management:
+  tracing:
+    sampling:
+      probability: 1.0

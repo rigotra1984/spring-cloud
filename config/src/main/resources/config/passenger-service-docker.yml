@@ -1,0 +1,54 @@
+server:
+  port: 8080
+
+eureka:
+  client:
+    serviceUrl:
+      defaultZone: http://eureka-service:8061/eureka/
+  instance:
+    hostname: passenger-service
+      
+logging:
+  pattern: 
+    console: "%d{yyyy-MM-dd HH:mm:ss} [%X{traceId:-},%X{spanId:-}] ${LOG_LEVEL_PATTERN:-%5p} %m%n"
+
+springdoc:
+  packagesToScan: com.rigoberto.passenger
+
+spring:
+  output:
+    ansi:
+      enabled: always
+  datasource:
+    driverClassName: org.postgresql.Driver
+    url: jdbc:postgresql://passenger-transport:5432/passenger-cloud
+    username: postgres
+    password: postgres
+  jpa:
+    hibernate:
+      ddl-auto: validate
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.PostgreSQLDialect
+        temp:
+          use_jdbc_metadata_defaults: false
+        jdbc:
+          lob:
+            non_contextual_creation: true
+        global_quote_identifiers: true
+    show-sql: true
+
+management:
+  tracing:
+    sampling:
+      probability: 1.0
+
+feign:
+  url: http://transport-service:9005/transport
+  name: transport-service
+  client:
+    config:
+      default:
+        connectTimeout: 5000
+        readTimeout: 5000
+        loggerLevel: basic
