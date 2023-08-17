@@ -1,0 +1,49 @@
+server:
+  port: 8060
+
+springdoc:
+  packagesToScan: com.rigoberto.event
+
+spring:
+  application:
+    name: event-service
+  output:
+    ansi:
+      enabled: always
+  cloud:
+    config:
+      enabled: false
+    gateway:
+      discovery:
+        locator:
+          enabled: true
+  r2dbc:
+    url: r2dbc:postgresql://127.0.0.1:54322/event-cloud
+    username: postgres
+    password: postgres
+  jpa:
+    hibernate:
+      ddl-auto: validate
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.PostgreSQLDialect
+        temp:
+          use_jdbc_metadata_defaults: false
+        jdbc:
+          lob:
+            non_contextual_creation: true
+        global_quote_identifiers: true
+    show-sql: true
+
+eureka:
+  client:
+    enabled: false
+
+logging:
+  pattern:
+    console: "%d{yyyy-MM-dd HH:mm:ss} [%X{traceId:-},%X{spanId:-}] ${LOG_LEVEL_PATTERN:-%5p} %m%n"
+
+management:
+  tracing:
+    sampling:
+      probability: 1.0

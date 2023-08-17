@@ -6,22 +6,21 @@ eureka:
     serviceUrl:
       defaultZone: http://eureka-service:8061/eureka/
   instance:
-    hostname: passenger-service
+    hostname: event-service
       
 logging:
   pattern: 
     console: "%d{yyyy-MM-dd HH:mm:ss} [%X{traceId:-},%X{spanId:-}] ${LOG_LEVEL_PATTERN:-%5p} %m%n"
 
 springdoc:
-  packagesToScan: com.rigoberto.passenger
+  packagesToScan: com.rigoberto.event
 
 spring:
   output:
     ansi:
       enabled: always
-  datasource:
-    driverClassName: org.postgresql.Driver
-    url: jdbc:postgresql://postgres-passenger:5432/passenger-cloud
+  r2dbc:
+    url: r2dbc:postgresql://postgres-event:5432/event-cloud
     username: postgres
     password: postgres
   jpa:
@@ -42,13 +41,3 @@ management:
   tracing:
     sampling:
       probability: 1.0
-
-feign:
-  url: http://transport-service:9005/transport
-  name: transport-service
-  client:
-    config:
-      default:
-        connectTimeout: 5000
-        readTimeout: 5000
-        loggerLevel: basic
