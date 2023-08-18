@@ -29,21 +29,21 @@ services:
       start_period: 40s
     environment:
       SPRING_PROFILES_ACTIVE: docker
-#  postgres-transport:
-#    image: 'postgres:13.1-alpine'
-#    container_name: postgres-transport
-#    environment:
-#      - 'POSTGRES_DB=transport-cloud'
-#      - 'POSTGRES_PASSWORD=postgres'
-#      - 'POSTGRES_USER=postgres'
-#    ports:
-#      - '5432'
-#    healthcheck:
-#      test: [ "CMD-SHELL", "pg_isready -U postgres" ]
-#      interval: 10s
-#      timeout: 5s
-#      retries: 10
-#    restart: always
+  postgres-transport:
+    image: 'postgres:13.1-alpine'
+    container_name: postgres-transport
+    environment:
+      - 'POSTGRES_DB=transport-cloud'
+      - 'POSTGRES_PASSWORD=postgres'
+      - 'POSTGRES_USER=postgres'
+    ports:
+      - '5432'
+    healthcheck:
+      test: [ "CMD-SHELL", "pg_isready -U postgres" ]
+      interval: 10s
+      timeout: 5s
+      retries: 10
+    restart: always
 #  postgres-passenger:
 #    image: 'postgres:13.1-alpine'
 #    container_name: postgres-passenger
@@ -74,19 +74,19 @@ services:
 #        timeout: 5s
 #        retries: 10
 #      restart: always
-#  transport-service:
-#    image: rigoberto/transport-service:1.0-SNAPSHOT
-#    build: ./transport-service
-#    container_name: transport-service
-#    ports:
-#      - "8080"
-#    depends_on:
-#      eureka-service:
-#        condition: service_healthy
-#      postgres-transport:
-#        condition: service_healthy
-#    environment:
-#      SPRING_PROFILES_ACTIVE: docker
+  transport-service:
+    image: rigoberto/transport-service:1.0-SNAPSHOT
+    build: ./transport-service
+    container_name: transport-service
+    ports:
+      - "8081:8080"
+    depends_on:
+      eureka-service:
+        condition: service_healthy
+      postgres-transport:
+        condition: service_healthy
+    environment:
+      SPRING_PROFILES_ACTIVE: docker
 #  passenger-service:
 #    image: rigoberto/passenger-service:1.0-SNAPSHOT
 #    build: ./passenger-service
@@ -113,14 +113,14 @@ services:
 #          condition: service_healthy
 #      environment:
 #        SPRING_PROFILES_ACTIVE: docker
-  gateway-service:
-    image: rigoberto/gateway-service:1.0-SNAPSHOT
-    build: ./gateway
-    container_name: gateway-service
-    ports:
-      - "8060:8060"
+#  gateway-service:
+#    image: rigoberto/gateway-service:1.0-SNAPSHOT
+#    build: ./gateway
+#    container_name: gateway-service
+#    ports:
+#      - "8060:8060"
 #    depends_on:
 #      eureka-service:
 #        condition: service_healthy
-    environment:
-      SPRING_PROFILES_ACTIVE: local
+#    environment:
+#      SPRING_PROFILES_ACTIVE: docker

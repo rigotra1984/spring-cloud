@@ -13,7 +13,7 @@ import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
 @RestController
-@RequestMapping("/api/event")
+@RequestMapping("/event")
 @AllArgsConstructor
 public class EventController {
     private EventService service;
