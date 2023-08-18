@@ -1,7 +1,7 @@
 package com.rigoberto.event.controllers;
 
 import com.rigoberto.event.dtos.CreateEventDto;
-import com.rigoberto.event.entities.Event;
+import com.rigoberto.event.dtos.EventDto;
 import com.rigoberto.event.mappers.EventMapper;
 import com.rigoberto.event.services.EventService;
 import jakarta.validation.Valid;
@@ -21,28 +21,26 @@ public class EventController {
 
     @GetMapping
     @ResponseStatus(HttpStatus.OK)
-    public Flux<Event> getAll(){
-        return service.getAll();
+    public Flux<EventDto> getAll(){
+        return service.getAll().map(mapper::convertToDto);
     }
 
     @GetMapping("/{id}")
     @ResponseStatus(HttpStatus.OK)
-    public Mono<Event> getById(@PathVariable Integer id ){
-        return service.getById(id);
+    public Mono<EventDto> getById(@PathVariable Integer id ){
+        return service.getById(id).map(mapper::convertToDto);
     }
 
     @PostMapping
     @ResponseStatus(HttpStatus.OK)
-    public Mono<Event> create(@RequestBody @Valid CreateEventDto dto){
-        return service.create(mapper.convertToEntity(dto));
+    public Mono<EventDto> create(@RequestBody @Valid CreateEventDto dto){
+        return service.create(mapper.convertToEntity(dto)).map(mapper::convertToDto);
     }
 
     @PutMapping("/{id}")
     @ResponseStatus(HttpStatus.OK)
-    public Mono<ResponseEntity<Event>> update(@PathVariable Integer id, @RequestBody @Valid CreateEventDto dto){
-        return service.update(id, mapper.convertToEntity(dto))
-                .map(ResponseEntity::ok)
-                .defaultIfEmpty(ResponseEntity.badRequest().build());
+    public Mono<EventDto> update(@PathVariable Integer id, @RequestBody @Valid CreateEventDto dto){
+        return service.update(id, mapper.convertToEntity(dto)).map(mapper::convertToDto);
     }
 
     @DeleteMapping("/{id}")

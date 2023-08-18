@@ -51,3 +51,4 @@ http://localhost:9005/swagger-ui.html
 http://localhost:9005/webjars/swagger-ui/index.html
 
 https://piotrminkowski.com/2023/07/28/reactive-spring-boot-with-webflux-r2dbc-and-postgres/
+https://github.com/r2dbc/r2dbc-spi/blob/main/r2dbc-spec/src/main/asciidoc/data-types.adoc
