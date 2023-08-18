@@ -59,6 +59,21 @@ services:
 #      timeout: 5s
 #      retries: 10
 #    restart: always
+#    postgres-event:
+#      image: 'postgres:13.1-alpine'
+#      container_name: postgres-event
+#      environment:
+#        - 'POSTGRES_DB=event-cloud'
+#        - 'POSTGRES_PASSWORD=postgres'
+#        - 'POSTGRES_USER=postgres'
+#      ports:
+#        - '5432'
+#      healthcheck:
+#        test: [ "CMD-SHELL", "pg_isready -U postgres" ]
+#        interval: 10s
+#        timeout: 5s
+#        retries: 10
+#      restart: always
 #  transport-service:
 #    image: rigoberto/transport-service:1.0-SNAPSHOT
 #    build: ./transport-service
@@ -85,6 +100,19 @@ services:
 #        condition: service_healthy
 #    environment:
 #      SPRING_PROFILES_ACTIVE: docker
+#    event-service:
+#      image: rigoberto/event-service:1.0-SNAPSHOT
+#      build: ./event-service
+#      container_name: event-service
+#      ports:
+#        - "8080"
+#      depends_on:
+#        eureka-service:
+#          condition: service_healthy
+#        postgres-event:
+#          condition: service_healthy
+#      environment:
+#        SPRING_PROFILES_ACTIVE: docker
   gateway-service:
     image: rigoberto/gateway-service:1.0-SNAPSHOT
     build: ./gateway
