@@ -12,14 +12,12 @@ logging:
 
 springdoc:
   packagesToScan: com.rigoberto.event
-  api-docs:
-    path: /v3/swagger-ui.html
-  swagger-ui:
-    path: /v3/api-docs
+#  api-docs:
+#    path: /v3/swagger-ui.html
+#  swagger-ui:
+#    path: /v3/api-docs
 
 spring:
-#  main:
-#    allow-bean-definition-overriding: true
   output:
     ansi:
       enabled: always

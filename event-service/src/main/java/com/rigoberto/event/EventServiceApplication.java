@@ -7,8 +7,8 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.data.r2dbc.repository.config.EnableR2dbcRepositories;
 import org.springframework.web.reactive.config.EnableWebFlux;
 
-@EnableR2dbcRepositories
 @EnableWebFlux
+@EnableR2dbcRepositories
 @SpringBootApplication
 @OpenAPIDefinition(info = @Info(title = "Event API", version = "1.0", description = "Documentation Event API v1.0"))
 public class EventServiceApplication {

@@ -6,6 +6,7 @@ import com.rigoberto.event.mappers.EventMapper;
 import com.rigoberto.event.services.EventService;
 import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import reactor.core.publisher.Flux;
@@ -19,21 +20,25 @@ public class EventController {
     private final EventMapper mapper;
 
     @GetMapping
+    @ResponseStatus(HttpStatus.OK)
     public Flux<Event> getAll(){
         return service.getAll();
     }
 
     @GetMapping("/{id}")
+    @ResponseStatus(HttpStatus.OK)
     public Mono<Event> getById(@PathVariable Integer id ){
         return service.getById(id);
     }
 
     @PostMapping
+    @ResponseStatus(HttpStatus.OK)
     public Mono<Event> create(@RequestBody @Valid CreateEventDto dto){
         return service.create(mapper.convertToEntity(dto));
     }
 
     @PutMapping("/{id}")
+    @ResponseStatus(HttpStatus.OK)
     public Mono<ResponseEntity<Event>> update(@PathVariable Integer id, @RequestBody @Valid CreateEventDto dto){
         return service.update(id, mapper.convertToEntity(dto))
                 .map(ResponseEntity::ok)
@@ -41,6 +46,7 @@ public class EventController {
     }
 
     @DeleteMapping("/{id}")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
     public Mono<ResponseEntity<Void>> delete(@PathVariable Integer id){
         return service.delete(id)
                 .map( r -> ResponseEntity.ok().<Void>build())
