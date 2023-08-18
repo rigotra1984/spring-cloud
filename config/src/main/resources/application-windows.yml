@@ -1,0 +1,8 @@
+spring:
+  profiles:
+    active: native
+  cloud:
+    config:
+      server:
+        native:
+          searchLocations: D:\\workspace\\console-module\\docker\\configs

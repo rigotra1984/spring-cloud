@@ -1,0 +1,9 @@
+spring:
+  cloud:
+    config:
+      server:
+        bootstrap: true
+        git:
+          uri: https://github.com/rigotra1984/console-configs
+          username: correo@gmail.com
+          password: password
