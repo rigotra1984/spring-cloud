@@ -17,6 +17,7 @@ import java.util.Date;
 @Table(name = "event")
 public class Event {
     @Id
+    @org.springframework.data.annotation.Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
